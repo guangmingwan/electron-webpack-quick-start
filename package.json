@@ -3,18 +3,47 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "rebuild-deps": "electron-builder install-app-deps",
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
+  "electronWebpack": {
+    "commonSourceDirectory": "src/common",
+    "title": true,
+    "whiteListedModules": [
+      "foo-ui-library"
+    ],
+    "main": {
+      "sourceDirectory": "src/main",
+      "webpackConfig": "webpack.main.config.js"
+    },
+    "renderer": {
+      "dll": [
+        "fooModule"
+      ],
+      "sourceDirectory": "src/renderer",
+      "webpackConfig": "webpack.renderer.config.js",
+      "webpackDllConfig": "custom.webpackDll.additions.js"
+    }
+  },
   "dependencies": {
+    "node-expat": "^2.3.17",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
     "electron": "4.0.1",
     "electron-builder": "20.38.4",
     "electron-webpack": "^2.6.2",
+    "electron-webpack-ts": "^3.1.1",
+    "electron-webpack-vue": "^2.2.3",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.4.3",
+    "vue": "^2.6.10",
     "webpack": "4.28.4"
   }
 }
